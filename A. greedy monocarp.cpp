@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool cmp(int a, int b){
+	return a>b;
+}
+int main(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	int t; cin >> t;
+	while(t--){
+		int n,k; cin >> n>>k;
+		vector <int> v(n);
+		for(int i=0;i<n;i++) cin >> v[i];
+		sort(v.begin(),v.end(),cmp);
+		for(int i=0;i<n;i++){
+			if(v[i]>k)break;
+			else k-=v[i];
+		}
+		cout << k <<"\n";
+	}
+	return 0;
+}

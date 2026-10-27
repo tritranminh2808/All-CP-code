@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool cmp(int a, int b){
+	return a>b;
+}
+int main(){
+	freopen("PHILAO.inp","r",stdin);
+	freopen("PHILAO.out","w",stdout);
+	ios_base::sync_with_stdio(0);cin.tie(0);
+	long long n, k;
+	cin >> n >> k;
+	vector<long long> a(n+1);
+	a[0] = 0;
+	long long minn=INT_MAX;
+	for (long long i = 1;i<=n;++i){
+		cin >> a[i];
+		minn=min(minn,a[i]);
+	}
+	sort(a.begin(), a.end());
+	long long mmm=0;
+	for(int i=1;i<=n;i++) mmm+=a[i]-minn;
+	vector<long long> c(n+1, 0);
+	for (long long i = 0;i<=n;++i){
+		c[0] +=a[i];
+	}
+	cout << mmm << endl;
+	for (long long i = 1;i<=n;++i){
+		c[i] = c[i-1]-(a[i]-a[i-1])*(n-i+1);
+	}
+	sort(c.begin(),c.end());
+	sort(a.begin(),a.end(), cmp);
+	auto p = lower_bound(c.begin(), c.end(), k);
+	if(*p == k){
+		long long t = p-c.begin();
+		cout << a[t];
+	}else{
+		long long t = p-c.begin();
+		long long res = a[t];
+		long long j = c[t];
+		while(j>=k){
+			res++;
+			j-=t;
+			if(res==a[t-1]){
+				t--;
+			}
+		}
+		cout << res-1 << " "  ;
+	}
+}
